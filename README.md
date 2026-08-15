@@ -37,6 +37,12 @@ numbered ADRs in [`docs/decisions/`](./docs/decisions/):
 - [0002 — Knowledge Map port strategy](./docs/decisions/0002-knowledge-map-port-strategy.md):
   the native rebuild uses the JS Knowledge Map as its design spec; LIDAR
   is a new fact source, not an AR overlay.
+- [0003 — Speech-to-text](./docs/decisions/0003-speech-to-text.md):
+  native on-device STT on both platforms; no paid cloud service in v1.
+- [0004 — Personal memory scope](./docs/decisions/0004-personal-memory-scope.md):
+  per-device, per-install; no cross-device sync in v1.
+- [0005 — Disclaimer gate](./docs/decisions/0005-disclaimer-gate.md):
+  rebuilt natively per platform with the same text as the web version.
 
 Format modelled on the
 [a11ybob-website decision log](https://github.com/bobdodd/a11ybob-website/tree/main/docs/decisions).
