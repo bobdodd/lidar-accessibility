@@ -26,6 +26,21 @@ landscape scans live alongside the code as it evolves.
 Full details and toolchain decisions:
 [`docs/development-environment.md`](./docs/development-environment.md).
 
+## Decisions
+
+Meaningful technical, design, and accessibility decisions are recorded as
+numbered ADRs in [`docs/decisions/`](./docs/decisions/):
+
+- [0001 — Mobile stack](./docs/decisions/0001-mobile-stack.md): dual-native
+  Android + iOS with a Kotlin Multiplatform core; reuses the existing
+  a11ybob Next.js backend.
+- [0002 — Knowledge Map port strategy](./docs/decisions/0002-knowledge-map-port-strategy.md):
+  the native rebuild uses the JS Knowledge Map as its design spec; LIDAR
+  is a new fact source, not an AR overlay.
+
+Format modelled on the
+[a11ybob-website decision log](https://github.com/bobdodd/a11ybob-website/tree/main/docs/decisions).
+
 ## Repository layout
 
 - `docs/` — project documentation (development environment, decisions).
