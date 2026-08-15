@@ -4,6 +4,8 @@ Prototype tools that use LIDAR to help blind and low-vision users
 understand and navigate their environment — in both mapped and unmapped
 spaces.
 
+**Repository:** <https://github.com/bobdodd/lidar-accessibility>
+
 ## Project scope
 
 This repository is a working space for a series of prototype tools
