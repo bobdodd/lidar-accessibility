@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LIDAR Accessibility</string>
+
+    <!-- Disclaimer gate — text kept in sync with a11ybob web disclaimer
+         by convention (see ADR 0005). -->
+    <string name="disclaimer_title">Before you start</string>
+    <string name="disclaimer_body">This is experimental, unfinished software. It can be wrong. Facts come from Wikipedia and can be out of date. It is not a navigation or safety tool. Your words and your approximate location may be sent to external services. It depends on GPS, network, and third-party services that can fail. Keep using your usual navigation methods.</string>
+    <string name="disclaimer_consent_label">I understand.</string>
+    <string name="disclaimer_accept_button">Accept and start</string>
+
+    <!-- Knowledge Map surface -->
+    <string name="knowledge_map_title">Knowledge Map</string>
+    <string name="knowledge_map_hint">Tap Listen and ask about places, streets, or accessibility features nearby.</string>
+    <string name="knowledge_map_listen">Listen</string>
+</resources>

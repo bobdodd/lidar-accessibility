@@ -55,13 +55,44 @@ Format modelled on the
 
 ## Repository layout
 
-- `docs/` — project documentation (development environment, decisions).
+- `core/` — Kotlin Multiplatform module with Android and iOS targets;
+  holds every algorithm that is not a platform primitive (chat
+  controller, heading smoother, follow-me, memory model, Ktor API
+  client, backstop timers). Namespace `com.bobdodd.lidaraccessibility.core`.
+- `androidApp/` — Android application module (Jetpack Compose,
+  Material 3, Room, Play Services location). Namespace
+  `com.bobdodd.lidaraccessibility.android`.
+- `gradle/libs.versions.toml` — single source of dependency versions.
+- `docs/` — project documentation (development environment, decisions,
+  architecture spec).
 - `research/` — device and platform capability notes (e.g. Pixel 10
   LIDAR).
 - `lidar-accessibility-landscape-research.md` — landscape scan of the
   LIDAR-for-accessibility field.
 - `commercial-lidar-accessibility-research.md` — survey of commercial
   offerings.
+
+### Toolchain (Aug 2026 stable set)
+
+- Kotlin 2.4.10, AGP 9.3.1, Gradle 9.5.0, JDK 17.
+- compileSdk 37, minSdk 33 (`createOnDeviceSpeechRecognizer` floor),
+  targetSdk 37.
+- Jetpack Compose BOM 2026.08.00 (Compose 1.12).
+- Ktor 3.5.2, Room 2.8.0, coroutines 1.9.0.
+
+### Building
+
+Open the repository in Android Studio Quail (`2026.1.x`) or run from
+the command line:
+
+```
+./gradlew :core:build
+./gradlew :androidApp:installDebug   # deploys to the Pixel 10 Pro XL over ADB
+```
+
+The Gradle wrapper is not committed yet — initialise it in the local
+clone with `gradle wrapper --gradle-version=9.5.0` before the first
+build.
 
 ## License
 

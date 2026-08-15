@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bootstrap theme; Compose owns the visual style once
+         setContent runs. Splash variant is applied to the launcher
+         Activity so the disclaimer gate does not flash a Material
+         action bar on cold start. -->
+    <style name="Theme.LidarAccessibility" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.LidarAccessibility.Splash" parent="Theme.LidarAccessibility">
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+</resources>

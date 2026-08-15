@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colours are owned by Compose theme; this file exists only so
+         the manifest theme has something to inherit. -->
+</resources>
