@@ -44,6 +44,12 @@ numbered ADRs in [`docs/decisions/`](./docs/decisions/):
 - [0005 — Disclaimer gate](./docs/decisions/0005-disclaimer-gate.md):
   rebuilt natively per platform with the same text as the web version.
 
+## Architecture
+
+- [Architecture spec (v1)](./docs/architecture.md) — module layout,
+  KMP core interfaces, and the port matrix from the web Knowledge Map
+  reading pass.
+
 Format modelled on the
 [a11ybob-website decision log](https://github.com/bobdodd/a11ybob-website/tree/main/docs/decisions).
 
