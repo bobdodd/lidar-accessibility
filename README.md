@@ -13,8 +13,22 @@ exploring digital navigation and wayfinding via LIDAR-equipped consumer
 devices (phones, tablets, and dedicated sensors). Research notes and
 landscape scans live alongside the code as it evolves.
 
+## Development environment
+
+- **Target device:** Google Pixel 10 Pro XL (initial target for all
+  prototypes).
+- **Workstation:** Windows 10, Ryzen 9 3900X, 32 GB RAM, RTX 2060 (6 GB),
+  2.73 TB storage. Hardware virtualization is not available on this
+  machine, so WSL2, Hyper-V, Docker Desktop, and the hardware-accelerated
+  Android Emulator are not part of the local toolchain — Android work
+  runs directly on the Pixel 10 Pro XL over ADB.
+
+Full details and toolchain decisions:
+[`docs/development-environment.md`](./docs/development-environment.md).
+
 ## Repository layout
 
+- `docs/` — project documentation (development environment, decisions).
 - `research/` — device and platform capability notes (e.g. Pixel 10
   LIDAR).
 - `lidar-accessibility-landscape-research.md` — landscape scan of the
