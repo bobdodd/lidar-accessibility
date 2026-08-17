@@ -2,36 +2,39 @@ package com.bobdodd.lidaraccessibility.core.heading
 
 import com.bobdodd.lidaraccessibility.core.location.LocationSource
 import com.bobdodd.lidaraccessibility.core.platform.DeviceOrientationSource
-import com.bobdodd.lidaraccessibility.core.platform.OrientationAccuracy
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * Compass-heading pipeline.
  *
- * Ports what remains from `HeadingProvider.js` after both mobile
- * platforms are found to provide tilt-compensated fused yaw:
+ * v1 minimal implementation: exposes a StateFlow with a NONE reading.
+ * Full implementation (low-pass filter, accuracy gate, retry-on-silent,
+ * GPS override) comes in step 3.
  *
- * - Low-pass in sin/cos space (default alpha = 0.82).
- * - Retry on silent sensor (up to 4 attempts, 1.5 s each).
- * - Accuracy gate: drop the value when [OrientationAccuracy] is
- *   `UNRELIABLE`.
- * - GPS course-over-ground override when the platform reports speed
- *   above [HeadingSettings.gpsOverrideMps]. Disabled by default in v1
- *   to match the current web behaviour (`gpsOverride = false`); a
- *   later ADR can flip this on once we validate against a Pixel 10.
- *
- * Tilt compensation is deliberately dropped from this layer.
+ * Tilt compensation is deliberately dropped — both platforms provide
+ * fused, tilt-compensated yaw via TYPE_ROTATION_VECTOR.
  */
 class HeadingSmoother(
     private val orientation: DeviceOrientationSource,
     private val location: LocationSource,
     private val settings: HeadingSettings = HeadingSettings.default(),
+    scope: CoroutineScope,
 ) {
-    val heading: StateFlow<HeadingReading>
-        get() = TODO("v1 scaffolding: implementation in the next pass")
+    private val _heading = MutableStateFlow(
+        HeadingReading(yawDeg = null, trusted = false, source = HeadingSource.NONE, timestampMs = 0)
+    )
+    val heading = _heading.asStateFlow()
 
-    fun start(): Unit = TODO("v1 scaffolding: implementation in the next pass")
-    fun stop(): Unit = TODO("v1 scaffolding: implementation in the next pass")
+    fun start() {
+        // Step 3: start collecting orientation.updates, apply low-pass,
+        // accuracy gate, and emit HeadingReading values.
+    }
+
+    fun stop() {
+        orientation.stop()
+    }
 }
 
 data class HeadingSettings(

@@ -17,6 +17,23 @@
          those come later and are declared with uses-feature when added. -->
     <uses-feature android:name="android.hardware.sensor.compass" android:required="false" />
 
+    <!-- Add these permission lines to your existing AndroidManifest.xml,
+     inside the <manifest> tag and above the <application> tag -->
+
+    <!-- Voice session: keep CPU running during STT/TTS -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- STT: on-device speech recognizer -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- Location: FusedLocationProvider -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- API calls to a11ybob.com backend -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".LidarAccessibilityApp"
         android:allowBackup="false"
