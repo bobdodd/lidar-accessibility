@@ -40,6 +40,7 @@ kotlin {
             implementation(libs.play.services.location)
             implementation(libs.room.runtime)
             implementation(libs.room.ktx)
+            implementation("com.google.ar:core:1.54.0")
         }
     }
 }

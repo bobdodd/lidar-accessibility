@@ -5,6 +5,8 @@ import com.bobdodd.lidaraccessibility.core.api.A11yBobApi
 import com.bobdodd.lidaraccessibility.core.api.A11yBobApiImpl
 import com.bobdodd.lidaraccessibility.core.api.LocationHint
 import com.bobdodd.lidaraccessibility.core.chat.ChatController
+import com.bobdodd.lidaraccessibility.core.depth.ArCoreDepthProvider
+import com.bobdodd.lidaraccessibility.core.depth.DepthProvider
 import com.bobdodd.lidaraccessibility.core.heading.HeadingSmoother
 import com.bobdodd.lidaraccessibility.core.location.FollowMe
 import com.bobdodd.lidaraccessibility.core.location.FusedLocationSource
@@ -25,6 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 /**
  * Manual composition root. Constructor-injected, no framework.
@@ -53,6 +56,8 @@ class AppComponent(
     val tts: SpeechSynthesizer = AndroidSpeechSynthesizer(appContext, applicationScope)
 
     val stt: SpeechRecognizer = AndroidSpeechRecognizer(appContext, applicationScope)
+
+    val depthProvider: DepthProvider = ArCoreDepthProvider(appContext, applicationScope)
 
     val heading = HeadingSmoother(orientation, location, scope = applicationScope)
 
@@ -83,10 +88,27 @@ class AppComponent(
         heading.start()
     }
 
+    /** Start depth sensing (requires camera permission). */
+    fun startDepth() {
+        applicationScope.launch {
+            try {
+                depthProvider.start()
+            } catch (e: Exception) {
+                // Shouldn't happen — start() has its own catch — but guard against crashes
+            }
+        }
+    }
+
+    /** Stop depth sensing and release the camera. */
+    fun stopDepth() {
+        depthProvider.stop()
+    }
+
     /** Release resources that hold native objects (TTS engine, etc.). */
     fun shutdown() {
         followMe.stop()
         heading.stop()
+        depthProvider.stop()
         applicationJob.cancel()
         (tts as? AndroidSpeechSynthesizer)?.shutdown()
         (busyCue as? AndroidBusyCue)?.release()
