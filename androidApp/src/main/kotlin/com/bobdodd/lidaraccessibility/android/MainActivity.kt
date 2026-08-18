@@ -33,9 +33,17 @@ class MainActivity : ComponentActivity() {
                     1 -> DiagnosticsScreen(
                         component = component,
                         context = this,
-                        onContinue = { screen = 2 },
+                        onContinue = {
+                            component.startSensors()
+                            screen = 2
+                        },
                     )
-                    2 -> KnowledgeMapScreen(chat = component.chat)
+                    2 -> KnowledgeMapScreen(
+                        chat = component.chat,
+                        heading = component.heading.heading,
+                        followMeEvent = component.followMe.lastEvent,
+                        isFollowing = component.followMe.isFollowing,
+                    )
                 }
             }
         }

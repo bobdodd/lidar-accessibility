@@ -12,6 +12,8 @@ import com.bobdodd.lidaraccessibility.core.location.LocationSource
 import com.bobdodd.lidaraccessibility.core.memory.InMemoryMemoryStore
 import com.bobdodd.lidaraccessibility.core.memory.MemoryStore
 import com.bobdodd.lidaraccessibility.core.platform.AndroidWakeLock
+import com.bobdodd.lidaraccessibility.core.platform.AndroidBusyCue
+import com.bobdodd.lidaraccessibility.core.platform.BusyCue
 import com.bobdodd.lidaraccessibility.core.platform.DeviceOrientationSource
 import com.bobdodd.lidaraccessibility.core.platform.RotationVectorOrientationSource
 import com.bobdodd.lidaraccessibility.core.platform.WakeLock
@@ -46,6 +48,8 @@ class AppComponent(
 
     val wakeLock: WakeLock = AndroidWakeLock(appContext)
 
+    val busyCue: BusyCue = AndroidBusyCue()
+
     val tts: SpeechSynthesizer = AndroidSpeechSynthesizer(appContext, applicationScope)
 
     val stt: SpeechRecognizer = AndroidSpeechRecognizer(appContext, applicationScope)
@@ -62,20 +66,30 @@ class AppComponent(
         followMe = followMe,
         scope = applicationScope,
         locationHintProvider = {
+            val headingReading = heading.heading.value
             location.getCurrent(timeoutMs = 5_000)?.let { fix ->
                 LocationHint(
                     lat = fix.lat,
                     lon = fix.lon,
-                    heading = null,
+                    heading = headingReading.yawDeg?.takeIf { headingReading.trusted },
                 )
             }
         },
+        busyCue = busyCue,
     )
+
+    /** Start background sensors (heading only — FollowMe starts on demand). */
+    fun startSensors() {
+        heading.start()
+    }
 
     /** Release resources that hold native objects (TTS engine, etc.). */
     fun shutdown() {
+        followMe.stop()
+        heading.stop()
         applicationJob.cancel()
         (tts as? AndroidSpeechSynthesizer)?.shutdown()
+        (busyCue as? AndroidBusyCue)?.release()
         orientation.stop()
         location.stop()
     }
